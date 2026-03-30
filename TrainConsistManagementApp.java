@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList; // Required for UC4
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -18,15 +18,15 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
         
-        // --- UC1: INITIALIZATION ---
-        System.out.println("=== Train Consist Management App ===");
+        //UC1: INITIALIZATION
+        System.out.println("Train Consist Management App");
         List<String> trainConsist = new ArrayList<>();
         System.out.println("Train initialized successfully...");
         System.out.println("Initial Bogie Count: " + trainConsist.size());
         System.out.println("Current Train Consist: " + trainConsist + "\n");
 
-        // --- UC2: PASSENGER BOGIE OPERATIONS ---
-        System.out.println("--- UC2 Add Passenger Bogies to Train ---");
+        //UC2: PASSENGER BOGIE OPERATIONS
+        System.out.println("UC2 Add Passenger Bogies to Trai");
         trainConsist.add("Sleeper");
         trainConsist.add("AC Chair");
         trainConsist.add("First Class");
@@ -34,43 +34,43 @@ public class TrainConsistManagementApp {
         trainConsist.remove("AC Chair");
         System.out.println("After Removing 'AC Chair': " + trainConsist + "\n");
 
-        // --- UC3: UNIQUE BOGIE ID TRACKING ---
-        System.out.println("--- UC3 Track Unique Bogie IDs ---");
+        //UC3: UNIQUE BOGIE ID TRACKING
+        System.out.println("UC3 Track Unique Bogie IDs");
         Set<String> bogieIds = new HashSet<>();
         bogieIds.add("BG101");
         bogieIds.add("BG102");
-        bogieIds.add("BG101"); // Duplicate
+        bogieIds.add("BG101");
         System.out.println("Bogie IDs (Unique): " + bogieIds + "\n");
 
-        // --- UC4: ORDERED BOGIE CONSIST ---
-        System.out.println("--- UC4 Maintain Ordered Bogie Consist ---");
+        //UC4: ORDERED BOGIE CONSIST
+        System.out.println("UC4 Maintain Ordered Bogie Consist");
 
         // Step 1: Create a LinkedList to model physical chaining
         // We use the specific LinkedList type to access addFirst/addLast methods
-        LinkedList<String> orderedConsist = new LinkedList<>(); // [cite: 268, 284]
+        LinkedList<String> orderedConsist = new LinkedList<>();
 
         // Step 2: Add initial bogies in sequence
-        orderedConsist.add("Engine");   // [cite: 285]
-        orderedConsist.add("Sleeper");  // [cite: 285]
-        orderedConsist.add("AC");       // [cite: 285]
-        orderedConsist.add("Cargo");    // [cite: 285]
-        orderedConsist.add("Guard");    // [cite: 285]
+        orderedConsist.add("Engine");
+        orderedConsist.add("Sleeper");
+        orderedConsist.add("AC");
+        orderedConsist.add("Cargo");
+        orderedConsist.add("Guard");
         
         System.out.println("Initial Train Consist:");
-        System.out.println(orderedConsist); // [cite: 296, 297]
+        System.out.println(orderedConsist);
 
         // Step 3: Insert 'Pantry Car' at position 2 (3rd spot)
-        orderedConsist.add(2, "Pantry Car"); // [cite: 280, 286]
+        orderedConsist.add(2, "Pantry Car");
         System.out.println("After Inserting 'Pantry Car' at position 2:");
-        System.out.println(orderedConsist); // [cite: 298, 299]
+        System.out.println(orderedConsist);
 
         // Step 4: Remove the first (Engine) and last (Guard) bogies
-        orderedConsist.removeFirst(); // [cite: 281, 287]
-        orderedConsist.removeLast();  // [cite: 281, 287]
+        orderedConsist.removeFirst();
+        orderedConsist.removeLast();
         
         // Final Output
         System.out.println("After Removing First and Last Bogie:");
-        System.out.println(orderedConsist); // [cite: 300, 301]
+        System.out.println(orderedConsist);
         
         System.out.println("UC4 ordered consist operations completed successfully..."); // [cite: 302]
     }
