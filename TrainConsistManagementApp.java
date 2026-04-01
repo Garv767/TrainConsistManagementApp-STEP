@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Comparator; // Required for UC7
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -7,29 +7,34 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Train Consist Management Application
  * (App-Based Learning Using Core Java & Data Structures)
- * UC1 - UC6: (Previously Implemented)
- * UC7: Sort Bogies by Capacity (Comparator)
+ * UC1 - UC9 Implementation
  * Author: Garv
- * Version: 7.0
+ * Version: 9.0
  */
 
-// UC7: Bogie class to represent a bogie with name and capacity
 class Bogie {
     String name;
+    String type;
     int capacity;
 
-    Bogie(String name, int capacity) {
+    Bogie(String name, String type, int capacity) {
         this.name = name;
+        this.type = type;
         this.capacity = capacity;
+    }
+
+    public String getType() {
+        return type;
     }
 
     @Override
     public String toString() {
-        return name + " -> " + capacity;
+        return name + " [" + type + "] -> " + capacity;
     }
 }
 
@@ -37,12 +42,12 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
         
-        // --- UC1: INITIALIZATION
+        // UC1: INITIALIZATION
         System.out.println("Train Consist Management App");
         List<String> trainConsist = new ArrayList<>();
         System.out.println("Train initialized successfully...\n");
 
-        //UC2: PASSENGER BOGIE OPERATIONS
+        // UC2: PASSENGER BOGIE OPERATIONS
         System.out.println("UC2 Add Passenger Bogies to Train");
         trainConsist.add("Sleeper");
         trainConsist.add("AC Chair");
@@ -55,9 +60,10 @@ public class TrainConsistManagementApp {
         Set<String> bogieIds = new HashSet<>();
         bogieIds.add("BG101");
         bogieIds.add("BG102");
+        bogieIds.add("BG101"); // Duplicate entry
         System.out.println("Bogie IDs (Unique): " + bogieIds + "\n");
 
-        //UC4: ORDERED BOGIE CONSIST
+        // UC4: ORDERED BOGIE CONSIST
         System.out.println("UC4 Maintain Ordered Bogie Consist");
         LinkedList<String> orderedConsist = new LinkedList<>();
         orderedConsist.add("Engine");
@@ -66,16 +72,17 @@ public class TrainConsistManagementApp {
         orderedConsist.add(1, "Pantry Car");
         System.out.println("Ordered Consist: " + orderedConsist + "\n");
 
-        //UC5: PRESERVE INSERTION ORDER WITH UNIQUENESS
+        // UC5: PRESERVE INSERTION ORDER WITH UNIQUENESS
         System.out.println("UC5 Preserve Insertion Order of Bogies");
         Set<String> formation = new LinkedHashSet<>();
         formation.add("Engine");
         formation.add("Sleeper");
         formation.add("Cargo");
         formation.add("Guard");
+        formation.add("Sleeper"); // Duplicate entry ignored
         System.out.println("Final Train Formation: " + formation + "\n");
 
-        //UC6: MAP BOGIE TO CAPACITY
+        // UC6: MAP BOGIE TO CAPACITY
         System.out.println("UC6 Map Bogie to Capacity (HashMap)");
         Map<String, Integer> bogieCapacities = new HashMap<>();
         bogieCapacities.put("Sleeper", 72);
@@ -86,35 +93,52 @@ public class TrainConsistManagementApp {
         for (Map.Entry<String, Integer> entry : bogieCapacities.entrySet()) {
             System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
-        System.out.println("\nUC6 bogie-capacity mapping completed successfully...\n");
+        System.out.println("\nUC6 mapping completed...\n");
 
-        //UC7: SORT BOGIES BY CAPACITY
+        // UC7: SORT BOGIES BY CAPACITY
         System.out.println("UC7 Sort Bogies by Capacity (Comparator)");
+        List<Bogie> bogieList = new ArrayList<>();
+        bogieList.add(new Bogie("Sleeper 1", "Passenger", 72));
+        bogieList.add(new Bogie("AC Chair 1", "Passenger", 56));
+        bogieList.add(new Bogie("First Class 1", "Passenger", 24));
+        bogieList.add(new Bogie("General 1", "Passenger", 90));
 
-        // Step 1: Create a List to store Bogie objects
-        List<Bogie> passengerBogies = new ArrayList<>();
-
-        // Step 2: Add bogies with capacities to the list
-        passengerBogies.add(new Bogie("Sleeper", 72));
-        passengerBogies.add(new Bogie("AC Chair", 56));
-        passengerBogies.add(new Bogie("First Class", 24));
-        passengerBogies.add(new Bogie("General", 90));
-
-        // Step 3: Display bogies before sorting
         System.out.println("Before Sorting:");
-        for (Bogie b : passengerBogies) {
-            System.out.println(b);
-        }
+        bogieList.forEach(System.out::println);
 
-        // Step 4: Use Comparator to sort bogies based on capacity
-        passengerBogies.sort(Comparator.comparingInt(b -> b.capacity));
+        bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
-        // Step 5: Display the sorted list of bogies
         System.out.println("\nAfter Sorting by Capacity:");
-        for (Bogie b : passengerBogies) {
-            System.out.println(b);
-        }
+        bogieList.forEach(System.out::println);
+        System.out.println("\nUC7 sorting completed...\n");
 
-        System.out.println("\nUC7 sorting completed...");
+        // UC8: FILTER PASSENGER BOGIES USING STREAMS
+        System.out.println("UC8 Filter Passenger Bogies Using Streams");
+        int threshold = 60;
+        System.out.println("Filtering bogies with capacity > " + threshold + ":");
+        List<Bogie> filteredBogies = bogieList.stream()
+                .filter(b -> b.capacity > threshold)
+                .collect(Collectors.toList());
+        filteredBogies.forEach(System.out::println);
+        System.out.println("\nUC8 filtering completed...\n");
+
+        // UC9: GROUP BOGIES BY TYPE
+        System.out.println("UC9 Group Bogies by Type (Collectors.groupingBy)");
+        
+        // Adding more bogies to demonstrate grouping
+        bogieList.add(new Bogie("Sleeper 2", "Passenger", 72));
+        bogieList.add(new Bogie("Tanker 1", "Goods", 100));
+        bogieList.add(new Bogie("Flatcar 1", "Goods", 120));
+
+        Map<String, List<Bogie>> groupedBogies = bogieList.stream()
+                .collect(Collectors.groupingBy(Bogie::getType));
+
+        System.out.println("Grouped Bogie Report:");
+        groupedBogies.forEach((type, list) -> {
+            System.out.println("Category: " + type);
+            list.forEach(b -> System.out.println("  - " + b.name + " (Capacity: " + b.capacity + ")"));
+        });
+
+        System.out.println("\nUC9 grouping completed.");
     }
 }
