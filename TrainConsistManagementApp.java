@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * Train Consist Management Application
- * Full Implementation: UC1 to UC14
+ * Full Implementation: UC1 to UC15
  * Author: Garv
  */
 
@@ -25,9 +25,16 @@ class InvalidCapacityException extends Exception {
     }
 }
 
+// UC15: Custom Runtime Exception for Cargo Safety
+class CargoSafetyException extends RuntimeException {
+    public CargoSafetyException(String message) {
+        super(message);
+    }
+}
+
 class Bogie {
     String name;
-    String type;
+    String type; // Used as the shape for Goods bogies
     String category;
     int capacity;
     String cargo;
@@ -49,6 +56,25 @@ class Bogie {
     public String getCategory() { return category; }
     public int getCapacity() { return capacity; }
     public String getCargo() { return cargo; }
+
+    // UC15: Assign cargo with safety validation using try-catch-finally
+    public void assignCargoSafely(String newCargo) {
+        try {
+            // Rule: Rectangular bogie cannot carry petroleum
+            if (this.type.equalsIgnoreCase("Rectangular") && newCargo.equalsIgnoreCase("Petroleum")) {
+                throw new CargoSafetyException("Unsafe cargo assignment!");
+            }
+            
+            this.cargo = newCargo;
+            System.out.println("Cargo assigned successfully -> " + newCargo);
+            
+        } catch (CargoSafetyException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            // finally block executes cleanup or logging whether successful or failed
+            System.out.println("Cargo validation completed for " + this.type + " bogie\n");
+        }
+    }
 
     @Override
     public String toString() {
@@ -179,10 +205,30 @@ public class TrainConsistManagementApp {
                 System.out.println("Attempting to add a bogie with zero capacity...");
                 Bogie invalidBogie = new Bogie("Broken Bogie", "General", "Passenger", 0, "None");
             } catch (InvalidCapacityException e) {
-                System.err.println("Caught Expected Exception: " + e.getMessage());
+                System.err.println("Caught Expected Exception: " + e.getMessage() + "\n");
             }
 
-            System.out.println("\nAll Use Cases (UC1-UC14) completed successfully.");
+            // UC15: SAFE CARGO ASSIGNMENT (try-catch-finally)
+            System.out.println("UC15 - Safe Cargo Assignment");
+
+            try {
+                // Initialize bogies to test safe vs unsafe assignment
+                Bogie cylindricalBogie = new Bogie("Tanker 2", "Cylindrical", "Goods", 100, "None");
+                Bogie rectangularBogie = new Bogie("Boxcar 2", "Rectangular", "Goods", 120, "None");
+
+                // Test Safe Assignment (Petroleum in Cylindrical bogie)
+                cylindricalBogie.assignCargoSafely("Petroleum");
+
+                // Test Unsafe Assignment (Petroleum in Rectangular bogie)
+                rectangularBogie.assignCargoSafely("Petroleum");
+
+                System.out.println("UC15 runtime handling completed...\n");
+
+            } catch (InvalidCapacityException e) {
+                System.err.println("Error initializing bogies for UC15: " + e.getMessage());
+            }
+
+            System.out.println("All Use Cases (UC1-UC15) completed successfully.");
 
         } catch (InvalidCapacityException e) {
             System.err.println("Critical Error in Train Formation: " + e.getMessage());
