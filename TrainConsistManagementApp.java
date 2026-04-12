@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * Train Consist Management Application
- * Full Implementation: UC1 to UC18
+ * Full Implementation: UC1 to UC19
  * Author: Garv
  */
 
@@ -281,30 +281,75 @@ public class TrainConsistManagementApp {
             System.out.println("UC18 Linear Search for Bogie ID");
 
             String[] linearSearchIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-            String searchId = "BG309";
+            String searchIdLinear = "BG309";
 
             System.out.println("Available Bogie IDs:");
             for (String id : linearSearchIds) {
                 System.out.println(id);
             }
 
-            boolean found = false;
+            boolean foundLinear = false;
             for (String id : linearSearchIds) {
-                if (id.equals(searchId)) {
-                    found = true;
+                if (id.equals(searchIdLinear)) {
+                    foundLinear = true;
                     break;
                 }
             }
 
-            if (found) {
-                System.out.println("Bogie " + searchId + " found in train consist.");
+            if (foundLinear) {
+                System.out.println("Bogie " + searchIdLinear + " found in train consist.");
             } else {
-                System.out.println("Bogie " + searchId + " not found.");
+                System.out.println("Bogie " + searchIdLinear + " not found.");
             }
 
             System.out.println("UC18 search completed...\n");
 
-            System.out.println("All Use Cases (UC1-UC18) completed successfully.");
+            // UC19: BINARY SEARCH FOR BOGIE ID
+            System.out.println("UC19 Binary Search for Bogie ID");
+
+            String[] binarySearchIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+            
+            // Ensure data is sorted before binary search (precondition)
+            Arrays.sort(binarySearchIds);
+            
+            String searchKey = "BG309";
+
+            System.out.println("Sorted Bogie IDs:");
+            for (String id : binarySearchIds) {
+                System.out.println(id);
+            }
+
+            // Binary Search Logic
+            int low = 0;
+            int high = binarySearchIds.length - 1;
+            boolean foundBinary = false;
+
+            while (low <= high) {
+                int mid = low + (high - low) / 2;
+                
+                int res = searchKey.compareTo(binarySearchIds[mid]);
+                
+                if (res == 0) {
+                    foundBinary = true;
+                    break;
+                }
+                
+                if (res > 0) {
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+
+            if (foundBinary) {
+                System.out.println("\nBogie " + searchKey + " found using Binary Search.");
+            } else {
+                System.out.println("\nBogie " + searchKey + " not found using Binary Search.");
+            }
+
+            System.out.println("\nUC19 search completed...\n");
+
+            System.out.println("All Use Cases (UC1-UC19) completed successfully.");
 
         } catch (InvalidCapacityException e) {
             System.err.println("Critical Error in Train Formation: " + e.getMessage());
