@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * Train Consist Management Application
- * Full Implementation: UC1 to UC16
+ * Full Implementation: UC1 to UC17
  * Author: Garv
  */
 
@@ -261,7 +262,22 @@ public class TrainConsistManagementApp {
             }
             System.out.println("\n\nUC16 sorting completed...\n");
 
-            System.out.println("All Use Cases (UC1-UC16) completed successfully.");
+            // UC17: SORT BOGIE NAMES USING Arrays.sort()
+            System.out.println("UC17 Sort Bogie Names Using Arrays.sort()");
+
+            String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+
+            System.out.println("Original Bogie Names:");
+            System.out.println(Arrays.toString(bogieNames) + "\n");
+
+            Arrays.sort(bogieNames);
+
+            System.out.println("Sorted Bogie Names (Alphabetical):");
+            System.out.println(Arrays.toString(bogieNames) + "\n");
+
+            System.out.println("UC17 sorting completed...\n");
+
+            System.out.println("All Use Cases (UC1-UC17) completed successfully.");
 
         } catch (InvalidCapacityException e) {
             System.err.println("Critical Error in Train Formation: " + e.getMessage());
