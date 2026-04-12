@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * Train Consist Management Application
- * Full Implementation: UC1 to UC19
+ * Full Implementation: UC1 to UC20
  * Author: Garv
  */
 
@@ -349,7 +349,39 @@ public class TrainConsistManagementApp {
 
             System.out.println("\nUC19 search completed...\n");
 
-            System.out.println("All Use Cases (UC1-UC19) completed successfully.");
+            // Message placed before the UC20 intentional crash
+            System.out.println("All Previous Use Cases (UC1-UC19) completed successfully.\n");
+
+            // UC20: EXCEPTION HANDLING DURING SEARCH OPERATIONS
+            System.out.println("UC20 Exception Handling During Search");
+
+            // Create bogie array (empty train scenario)
+            String[] emptyBogieIds = {};
+            String failFastSearchId = "BG101";
+
+            // FAIL-FAST VALIDATION
+            // Check if train has bogies before performing search
+            if (emptyBogieIds.length == 0) {
+                throw new IllegalStateException("No bogies available in train. Cannot perform search.");
+            }
+
+            // SEARCH LOGIC (executes only if data exists)
+            boolean isFoundUC20 = false;
+            for (String id : emptyBogieIds) {
+                if (id.equals(failFastSearchId)) {
+                    isFoundUC20 = true;
+                    break;
+                }
+            }
+
+            if (isFoundUC20) {
+                System.out.println("Bogie " + failFastSearchId + " found.");
+            } else {
+                System.out.println("Bogie " + failFastSearchId + " not found.");
+            }
+
+            // Note: Because of the exception thrown above, lines below will not execute.
+            System.out.println("\nUC20 execution completed...");
 
         } catch (InvalidCapacityException e) {
             System.err.println("Critical Error in Train Formation: " + e.getMessage());
