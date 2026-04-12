@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * Train Consist Management Application
- * Full Implementation: UC1 to UC15
+ * Full Implementation: UC1 to UC16
  * Author: Garv
  */
 
@@ -228,7 +228,40 @@ public class TrainConsistManagementApp {
                 System.err.println("Error initializing bogies for UC15: " + e.getMessage());
             }
 
-            System.out.println("All Use Cases (UC1-UC15) completed successfully.");
+            // UC16: MANUAL SORTING USING BUBBLE SORT
+            System.out.println("UC16 Manual Sorting using Bubble Sort");
+
+            // Create array of passenger bogie capacities
+            int[] capacities = {72, 56, 24, 70, 60};
+
+            // Display original order
+            System.out.println("Original Capacities:");
+            for (int c : capacities) {
+                System.out.print(c + " ");
+            }
+            System.out.println();
+
+            // Bubble Sort Logic
+            int n = capacities.length;
+            for (int i = 0; i < n - 1; i++) {
+                for (int j = 0; j < n - i - 1; j++) {
+                    if (capacities[j] > capacities[j + 1]) {
+                        // Swap values if they are in the wrong order
+                        int temp = capacities[j];
+                        capacities[j] = capacities[j + 1];
+                        capacities[j + 1] = temp;
+                    }
+                }
+            }
+
+            // Display sorted result
+            System.out.println("\nSorted Capacities (Ascending):");
+            for (int c : capacities) {
+                System.out.print(c + " ");
+            }
+            System.out.println("\n\nUC16 sorting completed...\n");
+
+            System.out.println("All Use Cases (UC1-UC16) completed successfully.");
 
         } catch (InvalidCapacityException e) {
             System.err.println("Critical Error in Train Formation: " + e.getMessage());
