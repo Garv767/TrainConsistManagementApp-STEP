@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * Train Consist Management Application
- * Full Implementation: UC1 to UC17
+ * Full Implementation: UC1 to UC18
  * Author: Garv
  */
 
@@ -277,7 +277,34 @@ public class TrainConsistManagementApp {
 
             System.out.println("UC17 sorting completed...\n");
 
-            System.out.println("All Use Cases (UC1-UC17) completed successfully.");
+            // UC18: LINEAR SEARCH FOR BOGIE ID
+            System.out.println("UC18 Linear Search for Bogie ID");
+
+            String[] linearSearchIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+            String searchId = "BG309";
+
+            System.out.println("Available Bogie IDs:");
+            for (String id : linearSearchIds) {
+                System.out.println(id);
+            }
+
+            boolean found = false;
+            for (String id : linearSearchIds) {
+                if (id.equals(searchId)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                System.out.println("Bogie " + searchId + " found in train consist.");
+            } else {
+                System.out.println("Bogie " + searchId + " not found.");
+            }
+
+            System.out.println("UC18 search completed...\n");
+
+            System.out.println("All Use Cases (UC1-UC18) completed successfully.");
 
         } catch (InvalidCapacityException e) {
             System.err.println("Critical Error in Train Formation: " + e.getMessage());
